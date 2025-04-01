@@ -59,6 +59,40 @@ namespace BankTests
             Assert.Fail("The expected exception was not thrown.");
         }
 
+        //проверка на пустую строку в имени
+        [TestMethod]
+        public void AccountCreation_WithEmptyName_ShouldThrow()
+        {
+            // Arrange
+            // Act
+            // Assert
+            // Дано + Когда + Тогда
+            var ex = Assert.ThrowsException<ArgumentException>(() => {
+                var account = new BankAccount("", 1000); // Пустое имя!
+            });
+
+            Assert.IsTrue(ex.Message.Contains("Имя не может быть пустым"),
+                "Банк должен требовать имя!");
+        }
+
+        //проверка на миллиардера!
+        [TestMethod]
+        public void Debit_WithCrazyRichBalance_ShouldWork()
+        {
+            // Arrange
+            // Дано: у нас триллион рублей (и 50 руб. на лимонад)
+            var account = new BankAccount("Олег Тинькофф", 1_000_000_000_050.00);
+
+            // Act
+            // Когда: снимаем 50 рублей на пачку чипсов
+            account.Debit(50.00);
+
+            // Assert
+            // Тогда: должен остаться триллион (и 0 на лимонад)
+            Assert.AreEqual(1_000_000_000_000.00, account.Balance,
+                "Даже у миллиардеров баланс должен уменьшаться!");
+        }
+
 
     }
 }
