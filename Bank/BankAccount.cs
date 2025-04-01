@@ -9,6 +9,7 @@ namespace BankAccountNS
     {
         public const string DebitAmountExceedsBalanceMessage = "Debit amount exceeds balance";
         public const string DebitAmountLessThanZeroMessage = "Debit amount is less than zero";
+        public const string AccountNameCannotBeEmpty = "Имя не может быть пустым";
         private readonly string m_customerName;
         private double m_balance;
 
@@ -16,6 +17,11 @@ namespace BankAccountNS
 
         public BankAccount(string customerName, double balance)
         {
+            if (string.IsNullOrEmpty(customerName))  // Добавлена проверка имени
+            {
+                throw new ArgumentException(AccountNameCannotBeEmpty, nameof(customerName));
+            }
+
             m_customerName = customerName;
             m_balance = balance;
         }
