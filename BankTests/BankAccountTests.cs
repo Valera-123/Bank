@@ -66,7 +66,6 @@ namespace BankTests
             // Arrange
             // Act
             // Assert
-            // Дано + Когда + Тогда
             var ex = Assert.ThrowsException<ArgumentException>(() => {
                 var account = new BankAccount("", 1000); // Пустое имя!
             });
